@@ -1,0 +1,29 @@
+{
+  "name": "football360-backend",
+  "version": "1.0.0",
+  "description": "Backend for Football360 app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pranshudobhal/football360-backend.git"
+  },
+  "author": "Pranshu Dobhal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pranshudobhal/football360-backend/issues"
+  },
+  "homepage": "https://github.com/pranshudobhal/football360-backend#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.11",
+    "mongoose-type-email": "^1.1.2"
+  }
+}
