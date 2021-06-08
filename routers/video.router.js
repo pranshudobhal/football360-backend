@@ -7,6 +7,6 @@ const { verifyAuth } = require('../authentication');
 
 router.get('/', getAllVideos);
 
-router.get('/:videoID', verifyAuth, getVideoByID);
+router.get('/:videoID', getVideoByID);
 
 module.exports = router;

@@ -15,6 +15,10 @@ const videoRouter = require('./routers/video.router');
 const loginRouter = require('./routers/login.router');
 const signupRouter = require('./routers/signup.router');
 const userRouter = require('./routers/user.router');
+const likedVideoRouter = require('./routers/likedVideo.router');
+const historyRouter = require('./routers/history.router');
+const watchLaterRouter = require('./routers/watchLater.router');
+const playlistRouter = require('./routers/playlist.router');
 
 const port = process.env.PORT;
 const app = express();
@@ -32,7 +36,12 @@ connectToDatabase();
 
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
-app.use('/video', videoRouter);
+app.use('/videos', videoRouter);
+
+app.use('/likedvideo', likedVideoRouter);
+app.use('/history', historyRouter);
+app.use('/watchlater', watchLaterRouter);
+app.use('/playlist', playlistRouter);
 app.use('/user', verifyAuth, userRouter);
 
 app.get('/', (req, res) => {
