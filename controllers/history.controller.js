@@ -3,7 +3,7 @@ const { History } = require('../models/history.model');
 const getAllHistory = async (req, res) => {
   try {
     const userID = '60bcfb9d8af3d639fc09aa27';
-    const allHistory = await History.findById(userID);
+    const allHistory = await History.findById(userID).populate('videos');
     res.json({ success: true, allHistory });
   } catch (error) {
     res.json({ success: false, message: 'Error retrieving liked videos!', errorMessage: error.message });
@@ -37,7 +37,6 @@ const addToHistory = async (req, res) => {
       res.json({ success: true, message: 'New document has been created and video has been added to history', newHistory });
     } else {
       const alreadyPresentInHistory = history.videos.includes(videoID);
-      console.log(alreadyPresentInHistory);
 
       if (alreadyPresentInHistory) {
         await history.videos.remove(videoID);

@@ -2,7 +2,8 @@ const { LikedVideo } = require('../models/likedVideo.model ');
 
 const getAllLikedVideos = async (req, res) => {
   try {
-    const allLikedVideos = await LikedVideo.find({});
+    const userID = '60bcfb9d8af3d639fc09aa27';
+    const allLikedVideos = await LikedVideo.findById(userID).populate('videos');
     res.json({ success: true, allLikedVideos });
   } catch (error) {
     res.json({ success: false, message: 'Error retrieving liked videos!', errorMessage: error.message });

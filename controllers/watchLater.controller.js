@@ -2,7 +2,8 @@ const { WatchLater } = require('../models/watchLater.model');
 
 const getAllWatchLater = async (req, res) => {
   try {
-    const allWatchLater = await WatchLater.find({});
+    const userID = '60bcfb9d8af3d639fc09aa27';
+    const allWatchLater = await WatchLater.findById(userID).populate('videos');
     res.json({ success: true, allWatchLater });
   } catch (error) {
     res.json({ success: false, message: 'Error retrieving watch later!', errorMessage: error.message });
