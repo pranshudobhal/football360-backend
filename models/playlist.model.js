@@ -7,11 +7,19 @@ const playlistSchema = new Schema({
   },
   playlists: [
     {
+      _id: {
+        type: String,
+      },
       name: {
         type: String,
         required: true,
       },
-      videos: [{ type: Schema.Types.ObjectId, ref: 'Video' }],
+      videos: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Video',
+        },
+      ],
     },
   ],
 });

@@ -1,4 +1,5 @@
 const { Playlist } = require('../models/playlist.model');
+const { v4: uuidv4 } = require('uuid');
 
 const getAllPlaylists = async (req, res) => {
   try {
@@ -12,7 +13,7 @@ const getAllPlaylists = async (req, res) => {
 
 const addNewPlaylist = async (req, res) => {
   try {
-    const { videoID, playlistName } = req.body;
+    const { videoID, playlistName, _id } = req.body;
     const userID = '60bcfb9d8af3d639fc09aa27';
     const userPlaylist = await Playlist.findById(userID);
 
@@ -21,6 +22,7 @@ const addNewPlaylist = async (req, res) => {
         _id: userID,
         playlists: [
           {
+            _id: uuidv4(),
             name: playlistName,
             videos: [{ _id: videoID }],
           },
@@ -29,10 +31,11 @@ const addNewPlaylist = async (req, res) => {
       await newPlaylist.save();
       res.json({ success: true, message: 'New playlist has been created', newPlaylist });
     } else {
-      const newPlaylist = { name: playlistName, videos: [{ _id: videoID }] };
+      const newPlaylist = { _id: uuidv4(), name: playlistName, videos: [{ _id: videoID }] };
       userPlaylist.playlists.push(newPlaylist);
       await userPlaylist.save();
-      res.json({ success: true, message: 'New playist has been added to user playlists', userPlaylist });
+
+      res.json({ success: true, message: 'New playist has been added to user playlists', newPlaylist });
     }
   } catch (error) {
     res.json({ success: false, message: 'Error creating playlist!', errorMessage: error.message });
