@@ -2,7 +2,7 @@ const { LikedVideo } = require('../models/likedVideo.model ');
 
 const getAllLikedVideos = async (req, res) => {
   try {
-    const userID = '60bcfb9d8af3d639fc09aa27';
+    const { userID } = req.user;
     const allLikedVideos = await LikedVideo.findById(userID).populate('videos');
     res.json({ success: true, allLikedVideos });
   } catch (error) {
@@ -13,7 +13,7 @@ const getAllLikedVideos = async (req, res) => {
 const addToLikedVideos = async (req, res) => {
   try {
     const { videoID } = req.params;
-    const userID = '60bcfb9d8af3d639fc09aa27';
+    const { userID } = req.user;
     const user = await LikedVideo.findById(userID);
 
     if (!user) {
@@ -37,7 +37,7 @@ const addToLikedVideos = async (req, res) => {
 const deleteFromLikedVideos = async (req, res) => {
   try {
     const { videoID } = req.params;
-    const userID = '60bcfb9d8af3d639fc09aa27';
+    const { userID } = req.user;
     const user = await LikedVideo.findById(userID);
     await user.videos.remove(videoID);
     await user.save();

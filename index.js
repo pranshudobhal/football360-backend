@@ -38,11 +38,12 @@ app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/videos', videoRouter);
 
+app.use(verifyAuth);
 app.use('/likedvideo', likedVideoRouter);
 app.use('/history', historyRouter);
 app.use('/watchlater', watchLaterRouter);
 app.use('/playlist', playlistRouter);
-app.use('/user', verifyAuth, userRouter);
+app.use('/user', userRouter);
 
 app.get('/', (req, res) => {
   res.json({ success: true, message: 'Football360 API' });

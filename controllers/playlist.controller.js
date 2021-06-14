@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const getAllPlaylists = async (req, res) => {
   try {
-    const userID = '60bcfb9d8af3d639fc09aa27';
+    const { userID } = req.user;
     const allPlaylists = await Playlist.findById(userID).populate('playlists.videos');
     res.json({ success: true, allPlaylists });
   } catch (error) {
@@ -13,8 +13,8 @@ const getAllPlaylists = async (req, res) => {
 
 const addNewPlaylist = async (req, res) => {
   try {
-    const { videoID, playlistName, _id } = req.body;
-    const userID = '60bcfb9d8af3d639fc09aa27';
+    const { userID } = req.user;
+    const { videoID, playlistName } = req.body;
     const userPlaylist = await Playlist.findById(userID);
 
     if (!userPlaylist) {
@@ -44,8 +44,8 @@ const addNewPlaylist = async (req, res) => {
 
 const deletePlaylist = async (req, res) => {
   try {
+    const { userID } = req.user;
     const { playlistID } = req.params;
-    const userID = '60bcfb9d8af3d639fc09aa27';
     const userPlaylist = await Playlist.findById(userID);
     await userPlaylist.playlists.remove(playlistID);
     await userPlaylist.save();
@@ -57,8 +57,8 @@ const deletePlaylist = async (req, res) => {
 
 const getIndividualPlaylist = async (req, res) => {
   try {
+    const { userID } = req.user;
     const { playlistID } = req.params;
-    const userID = '60bcfb9d8af3d639fc09aa27';
     const userPlaylist = await Playlist.findById(userID);
     const playlist = await userPlaylist.findById(playlistID);
     res.json({ success: true, playlist });
@@ -70,8 +70,8 @@ const getIndividualPlaylist = async (req, res) => {
 const updatePlaylistName = async (req, res) => {
   try {
     const { playlistID } = req.params;
+    const { userID } = req.user;
     const { playlistName } = req.body;
-    const userID = '60bcfb9d8af3d639fc09aa27';
     const userPlaylist = await Playlist.findById(userID);
     const playlist = userPlaylist.playlists.map((playlist) => {
       if (playlist.id === playlistID) {
@@ -90,7 +90,7 @@ const updatePlaylistName = async (req, res) => {
 const addVideoToPlaylist = async (req, res) => {
   try {
     const { playlistID, videoID } = req.params;
-    const userID = '60bcfb9d8af3d639fc09aa27';
+    const { userID } = req.user;
     const userPlaylist = await Playlist.findById(userID);
     const playlist = userPlaylist.playlists.find((playlistItem) => playlistItem.id === playlistID);
     playlist.videos.push(videoID);
@@ -105,7 +105,7 @@ const addVideoToPlaylist = async (req, res) => {
 const deleteVideoFromPlaylist = async (req, res) => {
   try {
     const { playlistID, videoID } = req.params;
-    const userID = '60bcfb9d8af3d639fc09aa27';
+    const { userID } = req.user;
     const userPlaylist = await Playlist.findById(userID);
     const playlist = userPlaylist.playlists.find((playlistItem) => playlistItem.id === playlistID);
     await playlist.videos.remove(videoID);

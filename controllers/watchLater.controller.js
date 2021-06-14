@@ -2,7 +2,7 @@ const { WatchLater } = require('../models/watchLater.model');
 
 const getAllWatchLater = async (req, res) => {
   try {
-    const userID = '60bcfb9d8af3d639fc09aa27';
+    const { userID } = req.user;
     const allWatchLater = await WatchLater.findById(userID).populate('videos');
     res.json({ success: true, allWatchLater });
   } catch (error) {
@@ -13,7 +13,7 @@ const getAllWatchLater = async (req, res) => {
 const addToWatchLater = async (req, res) => {
   try {
     const { videoID } = req.params;
-    const userID = '60bcfb9d8af3d639fc09aa27';
+    const { userID } = req.user;
     const user = await WatchLater.findById(userID);
 
     if (!user) {
@@ -37,7 +37,7 @@ const addToWatchLater = async (req, res) => {
 const deleteFromWatchLater = async (req, res) => {
   try {
     const { videoID } = req.params;
-    const userID = '60bcfb9d8af3d639fc09aa27';
+    const { userID } = req.user;
     const user = await WatchLater.findById(userID);
     await user.videos.remove(videoID);
     await user.save();

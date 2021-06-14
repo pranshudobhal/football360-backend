@@ -2,7 +2,7 @@ const { History } = require('../models/history.model');
 
 const getAllHistory = async (req, res) => {
   try {
-    const userID = '60bcfb9d8af3d639fc09aa27';
+    const { userID } = req.user;
     const allHistory = await History.findById(userID).populate('videos');
     res.json({ success: true, allHistory });
   } catch (error) {
@@ -12,7 +12,7 @@ const getAllHistory = async (req, res) => {
 
 const deleteAllHistory = async (req, res) => {
   try {
-    const userID = '60bcfb9d8af3d639fc09aa27';
+    const { userID } = req.user;
     const history = await History.findById(userID);
     await history.updateOne({ $set: { videos: [] } });
     await history.save();
@@ -25,7 +25,7 @@ const deleteAllHistory = async (req, res) => {
 const addToHistory = async (req, res) => {
   try {
     const { videoID } = req.params;
-    const userID = '60bcfb9d8af3d639fc09aa27';
+    const { userID } = req.user;
     const history = await History.findById(userID);
 
     if (!history) {
@@ -54,7 +54,7 @@ const addToHistory = async (req, res) => {
 const deleteFromHistory = async (req, res) => {
   try {
     const { videoID } = req.params;
-    const userID = '60bcfb9d8af3d639fc09aa27';
+    const { userID } = req.user;
     const history = await History.findById(userID);
     await history.videos.remove(videoID);
     await history.save();
