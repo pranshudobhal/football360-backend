@@ -1,24 +1,36 @@
 const { User } = require('../models/user.model');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    console.log(email, password);
 
-    if (user) {
-      if (user.password === password) {
-        const token = jwt.sign({ userID: user._id }, process.env.SECRET, { expiresIn: '24h' });
-        res.status(200).json({ success: true, user, token });
-      } else {
-        res.status(401).json({ success: false, message: 'Error logging in!!!', errorMessage: error.message });
-      }
-    } else {
-      res.status(401).json({ success: false, message: 'No such user exists!!!', errorMessage: error.message });
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log('not user');
+
+      return res.status(401).json({ success: false, message: 'No such user exists!!!' });
     }
+
+    const match = await bcrypt.compare(password, user.password);
+
+    if (!match) {
+      console.log('not match');
+
+      return res.status(401).json({ success: false, message: 'Error logging in!!!' });
+    }
+    console.log('below not match');
+
+    const token = jwt.sign({ userID: user._id }, process.env.SECRET, { expiresIn: '24h' });
+    res.status(200).json({ success: true, token });
+    console.log('end');
   } catch (error) {
-    res.json({ success: false, message: 'Some error with login!', errorMessage: error.message });
+    console.log('in error');
+
+    res.json({ success: false, message: 'Some error with login!' });
   }
 };
 

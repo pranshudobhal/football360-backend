@@ -1,13 +1,11 @@
 const express = require('express');
 require('dotenv').config();
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const jwt = require('jsonwebtoken');
 
 const { connectToDatabase } = require('./database/database');
-const { addVideoToCollection } = require('./models/video.model');
-const { addUserToCollection } = require('./models/user.model');
+// const { addVideoToCollection } = require('./models/video.model');
+// const { addUserToCollection } = require('./models/user.model');
 
 const { verifyAuth } = require('./authentication');
 
@@ -34,6 +32,10 @@ connectToDatabase();
 // addVideoToCollection();
 // addUserToCollection();
 
+app.get('/', (req, res) => {
+  res.json({ success: true, message: 'Football360 API' });
+});
+
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/videos', videoRouter);
@@ -44,10 +46,6 @@ app.use('/history', historyRouter);
 app.use('/watchlater', watchLaterRouter);
 app.use('/playlist', playlistRouter);
 app.use('/user', userRouter);
-
-app.get('/', (req, res) => {
-  res.json({ success: true, message: 'Football360 API' });
-});
 
 app.use((req, res) => {
   res.status(404).json({ success: false, message: 'Route does not exist!' });

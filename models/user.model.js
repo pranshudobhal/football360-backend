@@ -3,30 +3,19 @@ require('mongoose-type-email');
 const { Schema } = mongoose;
 const users = require('./user.data');
 
-/**
- * TODO:
- * 1. Username implementation
- */
-
 const userSchema = new Schema({
+  _id: Schema.Types.ObjectId,
   firstName: {
     type: String,
     required: [true, 'First Name cannot be empty'],
-    unique: true,
   },
   lastName: {
     type: String,
   },
-  // username: {
-  //   type: String,
-  //   required: [true, 'Username cannot be empty'],
-  //   unique: true,
-  // },
   email: {
     type: mongoose.SchemaTypes.Email,
     required: [true, 'Email cannot be empty'],
     unique: true,
-    index: true,
   },
   password: {
     type: String,
