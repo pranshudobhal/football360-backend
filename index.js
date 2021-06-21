@@ -5,7 +5,6 @@ const cors = require('cors');
 
 const { connectToDatabase } = require('./database/database');
 // const { addVideoToCollection } = require('./models/video.model');
-// const { addUserToCollection } = require('./models/user.model');
 
 const { verifyAuth } = require('./authentication');
 
@@ -30,7 +29,6 @@ connectToDatabase();
  * Run addVideoToCollection() only when adding new data to video JSON
  */
 // addVideoToCollection();
-// addUserToCollection();
 
 app.get('/', (req, res) => {
   res.json({ success: true, message: 'Football360 API' });

@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const { LikedVideo } = require('../models/likedVideo.model ');
 const { getAllLikedVideos, addToLikedVideos, deleteFromLikedVideos } = require('../controllers/likedVideo.controller');
 
 router.get('/', getAllLikedVideos);
